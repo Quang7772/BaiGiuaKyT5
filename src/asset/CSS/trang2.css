@@ -1,0 +1,114 @@
+/* ===== Tổng thể ===== */
+.student-page {
+  padding: 50px 80px;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== Tiêu đề ===== */
+.student-title {
+  text-align: center;
+  color: #b30000;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+.student-title::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 3px;
+  background-color: #b30000;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* ===== Lưới sinh viên ===== */
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+/* ===== Card sinh viên ===== */
+.student-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  text-align: center;
+  width: 100%;
+  max-width: 260px;
+}
+
+.student-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Ảnh sinh viên ===== */
+.student-image {
+  width: 100%;
+  height: 220px; /* giảm để thấy phần dưới */
+  overflow: hidden;
+  background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.student-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center; /* ưu tiên khuôn mặt */
+  transition: transform 0.4s ease;
+}
+
+.student-card:hover .student-image img {
+  transform: scale(1.05);
+}
+
+/* ===== Thông tin sinh viên ===== */
+.student-info {
+  padding: 15px;
+}
+
+.student-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 5px;
+}
+
+.student-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.student-info .lop {
+  color: #b30000;
+  font-weight: 600;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .student-page {
+    padding: 20px;
+  }
+
+  .student-title {
+    font-size: 24px;
+  }
+
+  .student-image {
+    height: 180px;
+  }
+}

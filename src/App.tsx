@@ -1,0 +1,57 @@
+// src/App.tsx
+
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import "./styles.css";
+
+import Home from "./Home";
+import Layout from "./Layout";
+import Trang1 from "./Trang1";
+import Trang2 from "./Trang2";
+import Listsanpham from "./Listsanpham";
+import Chitietsanpham from "./Chitietsanpham";
+import ListProducts_SP from "./ListProducts_SP";
+import ProductDetail from "./ProductDetail";
+import LoginPage from "./LoginPage";
+import LogoutPage from "./LogoutPage";
+import RegisterPage from "./RegisterPage";
+import ProtectedRoute from "./ProtectedRoute";
+import ListProducts_SP_Admin from "./ListProducts_SP_Admin";
+
+const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          {/* Trang chính */}
+          <Route index element={<ListProducts_SP />} />
+
+          {/* Các trang khác */}
+          <Route path="trang1" element={<Trang1 />} />
+          <Route path="listsanpham" element={<Listsanpham />} />
+          <Route path="detail/:id" element={<ProductDetail />} />
+          <Route path="sanpham/:id" element={<Chitietsanpham />} />
+          <Route path="trang2" element={<Trang2 />} />
+
+          {/* Đăng nhập, đăng xuất */}
+          <Route path="login" element={<LoginPage />} />
+          <Route path="logout" element={<LogoutPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* Trang Admin - Có bảo vệ */}
+          <Route
+            path="admin/products"
+            element={
+              <ProtectedRoute>
+                <ListProducts_SP_Admin />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default App;
