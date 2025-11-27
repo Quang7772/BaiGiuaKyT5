@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
 import { useCart } from "./CartContext"; // ⭐ Thêm CartContext
+import "./asset/CSS/Chitietsanpham.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
