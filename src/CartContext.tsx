@@ -1,4 +1,3 @@
-// src/CartContext.tsx
 import React, {
   createContext,
   useContext,
@@ -6,7 +5,6 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-// ✅ IMPORT QUAN TRỌNG: Lấy kiểu dữ liệu từ file product.ts
 import { Product, CartItem } from "./data/product";
 
 interface CartContextType {
@@ -35,21 +33,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem("MY_APP_CART", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // --- Logic xử lý (Giữ nguyên, chỉ đảm bảo Type khớp) ---
+  // ===== THÊM SẢN PHẨM VÀO GIỎ =====
   const addToCart = (product: Product) => {
+    const fixedProduct = {
+      ...product,
+      id: Number(product.id), // ⭐ Quan trọng
+      price: Number(product.price), // ⭐ Đảm bảo luôn là number
+    };
+
     setCartItems((prev) => {
-      // Tìm xem sản phẩm đã có chưa
-      const existing = prev.find((item) => item.product.id === product.id);
+      const existing = prev.find((item) => item.product.id === fixedProduct.id);
+
       if (existing) {
-        // Nếu có rồi -> Tăng quantity
         return prev.map((item) =>
-          item.product.id === product.id
+          item.product.id === fixedProduct.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       }
-      // Nếu chưa -> Thêm mới (quantity = 1)
-      return [...prev, { product, quantity: 1 }];
+
+      return [...prev, { product: fixedProduct, quantity: 1 }];
     });
   };
 
@@ -79,7 +82,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = () => setCartItems([]);
 
   const totalPrice = cartItems.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum, item) => sum + Number(item.product.price) * item.quantity,
     0
   );
 
