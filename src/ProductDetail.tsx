@@ -1,46 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+import { useCart } from "./CartContext"; // ⭐ Thêm CartContext
 
-// 🧩 Khai báo kiểu dữ liệu sản phẩm
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
-  description?: string;
-  rating_rate?: number;
-  rating_count?: number;
-}
-
-const ProductDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>(); // ✅ id là string (tham số URL)
-  const [product, setProduct] = useState<Product | null>(null);
+const ProductDetail = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const navigate = useNavigate();
+  const { addToCart } = useCart(); // ⭐ Lấy hàm addToCart
 
-  // 🧠 Lấy dữ liệu sản phẩm theo id
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        if (!id) return; // tránh lỗi undefined
-
         const { data, error } = await supabase
-          .from<Product>("product1")
+          .from("product1")
           .select("*")
-          .eq("id", Number(id)) // ép kiểu về number
+          .eq("id", id)
           .single();
 
         if (error) throw error;
         setProduct(data);
-      } catch (err: any) {
-        console.error("❌ Lỗi khi lấy dữ liệu sản phẩm:", err.message);
+      } catch (err) {
+        console.error("Lỗi khi lấy dữ liệu sản phẩm:", err.message);
       }
     };
 
     fetchProduct();
   }, [id]);
 
-  // ⏳ Hiển thị khi chưa tải xong
   if (!product) {
     return (
       <div style={{ textAlign: "center", marginTop: "40px" }}>
@@ -49,7 +36,6 @@ const ProductDetail: React.FC = () => {
     );
   }
 
-  // 🛍️ Giao diện chi tiết sản phẩm
   return (
     <div
       style={{
@@ -85,7 +71,6 @@ const ProductDetail: React.FC = () => {
           alignItems: "flex-start",
         }}
       >
-        {/* 🖼️ Hình ảnh sản phẩm */}
         <div
           style={{
             flex: "1 1 300px",
@@ -101,15 +86,10 @@ const ProductDetail: React.FC = () => {
           <img
             src={product.image}
             alt={product.title}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-            }}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         </div>
 
-        {/* 📋 Thông tin chi tiết */}
         <div style={{ flex: "1 1 300px" }}>
           <h2 style={{ marginBottom: "10px" }}>{product.title}</h2>
           <p
@@ -119,8 +99,7 @@ const ProductDetail: React.FC = () => {
           </p>
 
           <p style={{ marginTop: "10px", color: "#555" }}>
-            ⭐ {product.rating_rate ?? "0"} ({product.rating_count ?? 0} đánh
-            giá)
+            ⭐ {product.rating_rate} ({product.rating_count} đánh giá)
           </p>
 
           <p
@@ -134,6 +113,7 @@ const ProductDetail: React.FC = () => {
             {product.description || "Chưa có mô tả cho sản phẩm này."}
           </p>
 
+          {/* ⭐ SỬ DỤNG addToCart */}
           <button
             style={{
               marginTop: "20px",
@@ -144,7 +124,14 @@ const ProductDetail: React.FC = () => {
               borderRadius: "6px",
               cursor: "pointer",
             }}
-            onClick={() => alert("✅ Đã thêm vào giỏ hàng!")}
+            onClick={() => {
+              addToCart({
+                ...product,
+                id: Number(product.id), // đảm bảo kiểu number
+                price: Number(product.price), // đảm bảo kiểu number
+              });
+              alert("Đã thêm vào giỏ hàng!");
+            }}
           >
             🛒 Thêm vào giỏ hàng
           </button>
