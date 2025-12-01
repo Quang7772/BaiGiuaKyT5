@@ -155,8 +155,9 @@ const ListProducts_SP: React.FC = () => {
                     marginBottom: "6px",
                   }}
                 >
-                  ${p.price.toFixed(2)}
+                  {p.price.toLocaleString("vi-VN")}₫
                 </p>
+
                 <p
                   style={{
                     color: "#666",
