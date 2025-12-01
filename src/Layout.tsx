@@ -72,10 +72,10 @@ const Layout = () => {
               <Link to="/listsanpham">Sản phẩm</Link>
             </li>
             <li>
-              <Link to="/trang2">Sinh viên ưu đãi 🎓</Link>
+              <Link to="/trang2">Liên hệ</Link>
             </li>
             <li>
-              <Link to="/trang1">Tin tức</Link>
+              <Link to="/trang1">Giới thiệu</Link>
             </li>
             <li>
               <Link to="/admin/products">Quản trị</Link>
