@@ -107,7 +107,7 @@ const ListProducts_SP: React.FC = () => {
               {/* Ảnh sản phẩm */}
               <div
                 style={{
-                  width: "100%",
+                  width: "auto",
                   height: "230px",
                   backgroundColor: "#f3f3f3",
                   display: "flex",
@@ -120,7 +120,7 @@ const ListProducts_SP: React.FC = () => {
                   src={p.image}
                   alt={p.title}
                   style={{
-                    width: "100%",
+                    width: "auto",
                     height: "100%",
                     objectFit: "cover",
                     transition: "transform 0.3s ease",

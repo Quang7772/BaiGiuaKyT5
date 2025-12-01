@@ -41,6 +41,8 @@
   cursor: pointer;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   transition: 0.25s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
@@ -60,9 +62,9 @@
 }
 
 .image-wrapper img {
-  width: 100%;
+  width: auto;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* 🟢 FIX: Không méo ảnh, giữ đúng tỉ lệ */
   transition: 0.3s ease;
 }
 

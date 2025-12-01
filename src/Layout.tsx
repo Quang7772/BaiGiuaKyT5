@@ -21,6 +21,14 @@ const Layout = () => {
     setUser(null);
     navigate("/login");
   };
+  // Thêm useState cho ô tìm kiếm
+  const [keyword, setKeyword] = useState("");
+
+  const handleSearch = () => {
+    if (keyword.trim() !== "") {
+      navigate(`/listsanpham?search=${keyword}`);
+    }
+  };
 
   return (
     <div className="layout-shop">
@@ -40,8 +48,13 @@ const Layout = () => {
 
           {/* Thanh tìm kiếm */}
           <div className="search-area">
-            <input type="text" placeholder="Tìm sản phẩm, thương hiệu..." />
-            <button>Tìm kiếm</button>
+            <input
+              type="text"
+              placeholder="Tìm sản phẩm, thương hiệu..."
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+            <button onClick={handleSearch}>Tìm kiếm</button>
           </div>
 
           {/* Menu phải */}
